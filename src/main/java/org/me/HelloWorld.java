@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/demo")
 public class HelloWorld {
 
     /**
@@ -20,10 +21,10 @@ public class HelloWorld {
      */
     @RequestMapping("/helloworld")
     @ResponseBody
-    public Map<String, Object> hello() {
+    public String hello() {
         System.out.println("hello world");
         Map<String, Object> a = new LinkedHashMap<>();
         a.put("cc", 21312);
-        return a;
+        return Json;
     }
 }
