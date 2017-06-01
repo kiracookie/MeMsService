@@ -1,4 +1,4 @@
-package org.me;
+package org.me.controller;
 
 import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/demo")
-public class HelloWorld {
+public class ApplyForActivity {
     private static Gson gson = new Gson();
 
     /**
