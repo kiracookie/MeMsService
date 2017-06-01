@@ -2,14 +2,18 @@ package org.me.controller;
 
 import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/demo")
+@RequestMapping("/activity")
 public class ApplyForActivity {
     private static Gson gson = new Gson();
 
@@ -21,12 +25,23 @@ public class ApplyForActivity {
      *
      * @return
      */
-    @RequestMapping("/helloworld")
+    //获取参加人员列表
     @ResponseBody
-    public String hello() {
-        System.out.println("hello world");
+    @RequestMapping(value = "/getApplyList/{date}", method = RequestMethod.POST)
+    public String getApplyList(@PathVariable String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Map<String, Object> a = new LinkedHashMap<>();
-        a.put("cc", 21312);
+        a.put("cc", sdf.parse(date));
+        return gson.toJson(a);
+    }
+
+    //提交参加
+    @ResponseBody
+    @RequestMapping(value = "/joinActivity/{user},{num}", method = RequestMethod.POST)
+    public String joinActivity(@PathVariable String user, @PathVariable int num) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Map<String, Object> a = new LinkedHashMap<>();
+        a.put("cc", user + "===" + num);
         return gson.toJson(a);
     }
 }
