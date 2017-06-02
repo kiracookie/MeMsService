@@ -1,6 +1,7 @@
 package org.me.controller;
 
 import com.google.gson.Gson;
+import org.me.entity.ActivityRecord;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,9 @@ import java.util.Map;
 @RequestMapping("/activity")
 public class ApplyForActivity {
     private static Gson gson = new Gson();
+    /*
+    1.活动管理
+    */
 
     /**
      * 1. 使用RequestMapping注解来映射请求的URL
@@ -27,21 +31,21 @@ public class ApplyForActivity {
      */
     //获取参加人员列表
     @ResponseBody
-    @RequestMapping(value = "/getApplyList/{date}", method = RequestMethod.POST)
-    public String getApplyList(@PathVariable String date) throws ParseException {
+    @RequestMapping(value = "/getApplyList/{activityId}", method = RequestMethod.POST)
+    public String getApplyList(@PathVariable int activityId) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Map<String, Object> a = new LinkedHashMap<>();
-        a.put("cc", sdf.parse(date));
+        a.put("cc", activityId);
         return gson.toJson(a);
     }
 
     //提交参加
     @ResponseBody
-    @RequestMapping(value = "/joinActivity/{user},{num}", method = RequestMethod.POST)
-    public String joinActivity(@PathVariable String user, @PathVariable int num) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    @RequestMapping(value = "/joinActivity/{recordInfo}", method = RequestMethod.POST)
+    public String joinActivity(@PathVariable String recordInfo) throws ParseException {
+        ActivityRecord activityRecord = gson.fromJson(recordInfo, ActivityRecord.class);
         Map<String, Object> a = new LinkedHashMap<>();
-        a.put("cc", user + "===" + num);
+        a.put("cc", activityRecord);
         return gson.toJson(a);
     }
 }
